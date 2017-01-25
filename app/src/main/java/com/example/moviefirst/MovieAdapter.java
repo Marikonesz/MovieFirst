@@ -24,6 +24,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent, false);
+
         return new MovieViewHolder(v);
     }
 
@@ -31,14 +32,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Search_Item item = search.get(position);
         holder.movieTitle.setText(item.getTitle());
-
     }
-
-
 
     @Override
     public int getItemCount() {
         return search.size();
+    }
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
