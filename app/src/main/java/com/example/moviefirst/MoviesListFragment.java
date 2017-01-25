@@ -1,7 +1,6 @@
 package com.example.moviefirst;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,14 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.moviefirst.Api.MovieAPP;
-import com.example.moviefirst.Models.Search;
-import com.example.moviefirst.Models.Search_Item;
+import com.example.moviefirst.api.MovieApp;
+import com.example.moviefirst.model.Movie;
+import com.example.moviefirst.model.Search;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,7 +29,7 @@ public class MoviesListFragment extends android.app.Fragment {
     Button searchButton;
     RecyclerView recyclerViewMovies;
 Activity activity = getActivity();
-List<Search_Item> search = new ArrayList<>();
+List<Movie> search;
     public MoviesListFragment() {
         // Required empty public constructor
     }
@@ -46,16 +43,17 @@ List<Search_Item> search = new ArrayList<>();
         searchButton = (Button) view.findViewById(R.id.search_btn);
         recyclerViewMovies = (RecyclerView) view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
-        MovieAdapter adapter = new MovieAdapter(search);
+        final MovieAdapter adapter = new MovieAdapter();
         recyclerViewMovies.setLayoutManager(linearLayoutManager);
         recyclerViewMovies.setAdapter(adapter);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieAPP.getMovieApi().getData(editText.getText().toString()).enqueue(new Callback<Search>() {
+                MovieApp.getMovieApi().getData(editText.getText().toString()).enqueue(new Callback<Search>() {
                     @Override
                     public void onResponse(Call<Search> call, Response<Search> response) {
                         search.addAll(response.body().getSearch());
+                        adapter.setSearch(search);
                         recyclerViewMovies.getAdapter().notifyDataSetChanged();
 
                     }

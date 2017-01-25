@@ -6,18 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.moviefirst.Models.Search_Item;
+
+import com.example.moviefirst.model.Movie;
+
 
 import java.util.List;
 
-/**
- * Created by васыль on 23.01.2017.
- */
+
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
-    List<Search_Item> search;
+    List<Movie> search;
 
-    public MovieAdapter(List<Search_Item> search) {
+    public List<Movie> getSearch() {
+        return search;
+    }
+
+    public void setSearch(List<Movie> search) {
+
         this.search = search;
     }
 
@@ -30,7 +35,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        Search_Item item = search.get(position);
+        Movie item = search.get(position);
         holder.movieTitle.setText(item.getTitle());
     }
 

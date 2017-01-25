@@ -1,8 +1,6 @@
-package com.example.moviefirst.Models;
+package com.example.moviefirst.model;
 
-/**
- * Created by васыль on 21.01.2017.
- */
+
 
 import java.io.Serializable;
 import android.os.Parcel;
@@ -15,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
-public class Search_Item implements Serializable, Parcelable
+public class Movie implements Serializable, Parcelable
 {
 
     @SerializedName("Title")
@@ -33,14 +31,14 @@ public class Search_Item implements Serializable, Parcelable
     @SerializedName("Poster")
     @Expose
     private String poster;
-    public final static Parcelable.Creator<Search_Item> CREATOR = new Creator<Search_Item>() {
+    public final static Parcelable.Creator<Movie> CREATOR = new Creator<Movie>() {
 
 
         @SuppressWarnings({
                 "unchecked"
         })
-        public Search_Item createFromParcel(Parcel in) {
-            Search_Item instance = new Search_Item();
+        public Movie createFromParcel(Parcel in) {
+            Movie instance = new Movie();
             instance.title = ((String) in.readValue((String.class.getClassLoader())));
             instance.year = ((String) in.readValue((String.class.getClassLoader())));
             instance.imdbID = ((String) in.readValue((String.class.getClassLoader())));
@@ -49,8 +47,8 @@ public class Search_Item implements Serializable, Parcelable
             return instance;
         }
 
-        public Search_Item[] newArray(int size) {
-            return (new Search_Item[size]);
+        public Movie[] newArray(int size) {
+            return (new Movie[size]);
         }
 
     }
