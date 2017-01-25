@@ -1,18 +1,14 @@
-package com.example.moviefirst.Api;
+package com.example.moviefirst.api;
 
 import android.app.Application;
-
-import com.example.moviefirst.Api.RetrofitInterface;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by васыль on 20.01.2017.
- */
 
-public class MovieAPP extends Application {
-    private static RetrofitInterface movieApi;
+
+public class MovieApp extends Application {
+    private static OmdbApi movieApi;
     private Retrofit retrofit;
 
 
@@ -20,9 +16,9 @@ public class MovieAPP extends Application {
     public void onCreate() {
         super.onCreate();
         retrofit = new Retrofit.Builder().baseUrl("http://www.omdbapi.com/").addConverterFactory(GsonConverterFactory.create()).build();
-        movieApi = retrofit.create(RetrofitInterface.class);
+        movieApi = retrofit.create(OmdbApi.class);
     }
-    public static RetrofitInterface getMovieApi() {
+    public static OmdbApi getMovieApi() {
         return movieApi;
     }
 }

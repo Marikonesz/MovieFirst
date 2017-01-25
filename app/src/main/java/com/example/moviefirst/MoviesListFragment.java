@@ -1,6 +1,7 @@
 package com.example.moviefirst;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.example.moviefirst.model.Movie;
 import com.example.moviefirst.model.Search;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,13 +25,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MoviesListFragment extends android.app.Fragment {
+public class MoviesListFragment extends Fragment {
     View view;
     EditText editText;
     Button searchButton;
     RecyclerView recyclerViewMovies;
-Activity activity = getActivity();
-List<Movie> search;
+    Activity activity = getActivity();
+    List<Movie> search = new ArrayList<>();
+
     public MoviesListFragment() {
         // Required empty public constructor
     }
@@ -43,7 +46,7 @@ List<Movie> search;
         searchButton = (Button) view.findViewById(R.id.search_btn);
         recyclerViewMovies = (RecyclerView) view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
-        final MovieAdapter adapter = new MovieAdapter();
+        MovieAdapter adapter = new MovieAdapter(search);
         recyclerViewMovies.setLayoutManager(linearLayoutManager);
         recyclerViewMovies.setAdapter(adapter);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -52,10 +55,9 @@ List<Movie> search;
                 MovieApp.getMovieApi().getData(editText.getText().toString()).enqueue(new Callback<Search>() {
                     @Override
                     public void onResponse(Call<Search> call, Response<Search> response) {
+                        search.clear();
                         search.addAll(response.body().getSearch());
-                        adapter.setSearch(search);
                         recyclerViewMovies.getAdapter().notifyDataSetChanged();
-
                     }
 
                     @Override
@@ -70,19 +72,8 @@ List<Movie> search;
     }
 
 
-    // TODO: Rename method, update argument and hook method into UI event
 
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

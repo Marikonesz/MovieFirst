@@ -7,15 +7,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.moviefirst.api.MovieApp;
 import com.example.moviefirst.model.Movie;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     List<Movie> search;
+
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
+        ImageView poster;
+        TextView movieTitle;
+
+        public MovieViewHolder(View itemView) {
+            super(itemView);
+            poster = (ImageView) itemView.findViewById(R.id.poster);
+            movieTitle =  (TextView)itemView.findViewById(R.id.movie_title);
+        }
+    }
+
+    public MovieAdapter(List<Movie> search) {
+        this.search = search;
+    }
+
+    public MovieAdapter() {
+    }
 
     public List<Movie> getSearch() {
         return search;
@@ -37,6 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie item = search.get(position);
         holder.movieTitle.setText(item.getTitle());
+        Glide.with(holder.poster.getContext()).load(item.getPoster()).into(holder.poster);
     }
 
     @Override
@@ -48,14 +70,4 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
-        ImageView poster;
-        TextView movieTitle;
-
-        public MovieViewHolder(View itemView) {
-            super(itemView);
-            poster = (ImageView) itemView.findViewById(R.id.poster);
-            movieTitle =  (TextView)itemView.findViewById(R.id.movie_title);
-        }
-    }
 }
